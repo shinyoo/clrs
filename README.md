@@ -1,2 +1,3 @@
 # CLRS - shinyoo's implementation 
-Nothing special, just some personal implementation of common algorithms in CLRS.
+1. some personal implementations of common algorithms in CLRS.
+2. my own practice solution 
