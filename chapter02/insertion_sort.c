@@ -1,12 +1,3 @@
-#include <stdio.h>
-
-int main(int argc, char const *argv[])
-{
-	/* code */
-	return 0;
-}
-
-
 void insertion_sort(int arr[], int n)
 {
 	int key;
@@ -26,7 +17,7 @@ void insertion_sort_reverse(int arr[], int n)
 {
 	int key;
 	for(int i = 1, int j; i < n; i ++){
-		k = arr[i];
+		key = arr[i];
 		j = i - 1;
 		while(j > -1 && a[j] < key){
 			a[j + 1] = a[j];
@@ -59,4 +50,49 @@ void insertion_sort_recursive(int arr[], int n)
 		arr[i] = arr[i - 1];
 	}
 	arr[j] = cur;
+}
+
+
+
+//practice 2.3.6
+void insertion_sort_with_binary(int a[], int n)
+{
+	int key, i, j, k;
+	for(i = 1; i < n; i ++){
+		key = a[i];
+		// replace the following while with binary_search!
+		// while(j > -1 && a[j] > key){
+			// a[j + 1] = a[j];
+		// 	j --;
+		// }
+		j = binary_search_le(a, 0, i - 1, key);
+		k = i;
+		//still need a loop to do the "pushing"
+		while(k > j){
+			a[k] = a[k-1];
+			k --;
+		}
+		a[j] = key;
+	}
+}
+
+//search for a less-than or equal element index with the given number in a sorted(ascending) array
+int binary_search_le(int a[], int l, int r, int v)
+{
+
+	if(l > r){
+		return l;
+	}
+
+	int mid = (l + r) / 2;
+
+	if(v == a[mid]){
+		return mid;
+	}
+	if(v < a[mid]){
+		return binary_search_le(a, l, mid - 1, v);
+	}
+	else{
+		return binary_search_le(a, mid + 1, r, v);
+	}
 }
