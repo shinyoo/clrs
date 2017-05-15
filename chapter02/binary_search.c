@@ -1,4 +1,5 @@
 //practice 2.3.5
+//使用递归树(或者p20的方法)分析可以看出其与merge_sort的区别!
 int binary_search(int a[], int l, int r, int v)
 {
 	if(l > r){
