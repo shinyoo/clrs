@@ -57,3 +57,61 @@ node *precedessor(node *cur) {
 	return precedessor_node;
 }
 
+void insert(node *root, node *new) {
+	node *x, *y;
+	x = root;
+	while (x != NULL) {
+		y = x->p;
+		if (new->key <= x->key) {
+			x = x->l;
+		} else if (new->key > x->key){
+			x = x->r;
+		}
+	}
+
+	if (y == NULL) {
+		root = new;
+		return;
+	}
+	
+	new->p = y;
+	if (y->key > new->key) {
+		y->l = new;
+	} else {
+		y->r = new;
+	}
+}
+
+void transplant(node *root, node *origin, node *replace) {
+	//root node
+	if (origin->p == NULL) {
+		root = replace;
+	} else if (origin == origin->p->l) {
+		origin->p->l = replace;
+	} else {
+		origin->p->r = replace;
+	}
+	if (replace != NULL) {
+		replace->p = origin->p;
+	}
+}
+
+void delete(node *root, node *target) {
+	node *replace;
+	if (target->l == NULL) {
+		transplant(root, target, target->r);
+	} else if (target->r == NULL) {
+		transplant(root, target, target->l);
+	} else {
+		replace = minimum(target->r);	//find successor
+		//如果待删除的
+		if (replace->p != target) {		
+			transplant(root, replace, replace->r);
+			replace->r = target->r;
+			replace->r->p = replace;
+		}
+		transplant(root, target, replace);
+		replace->l = target->l;
+		replace->l->p = replace;
+	}
+}
