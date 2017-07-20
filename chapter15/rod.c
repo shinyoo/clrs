@@ -48,9 +48,34 @@ int cut_rod_bottom_up(int p[], int n) {
 	for (j = 1; j <= n; j ++) {
 		q = MIN;
 		for (i = 1; i <= j; i ++) {
-			q = max(q, r[j - i]);
+			q = max(q, p[i] + r[j - i]);
 		}
 		r[j] = q;
 	}
 	return r[n];
 }
+
+
+struct cut_solution{
+	int n;
+	int *r, int *s;
+};
+
+
+struct cut_solution cut_rod_bottom_up_with_sol(int p[], int n) {
+	int i, j, q, r[n + 1], s[n + 1];
+	r[0] = 0;
+	s[0] = 0;
+	for (j = 1; j <= n; j ++) {
+		q = MIN;
+		for (i = 1; i <= j; i ++) {
+			if (q < p[i] + r[j - i]) {
+				q = r[j - i];
+				s[j] = i;
+			}
+		}
+		r[j] = q;
+	}
+	return (struct cut_solution) {.n = n, .r = &r, .s = &s};
+}
+
