@@ -20,11 +20,11 @@ array_pair matrix_chain_order(array *p) {
 		m[i][i] = 0
 	}
 	for (l = 2; l <= n; l ++) {	//l is the length of the chain
-		for (i = 0; i <= n - l + 1; i ++) {
+		for (i = 0; i <= n - l; i ++) {
 			j = i + l - 1;
 			m[i][j] = MAX;
 			for (k = i; k < j; k ++) {
-				q = m[i][k] + m[k + 1] + p->array[i - 1] * p->array[k] * p->array[j];
+				q = m[i][k] + m[k + 1][j] + p->array[i - 1] * p->array[k] * p->array[j];
 				if (q < m[i][j]) {
 					m[i][j] = q;
 					s[i][j] = k;
